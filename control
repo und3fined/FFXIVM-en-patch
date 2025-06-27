@@ -1,0 +1,7 @@
+Package: com.und3fined.ffxiv-en-patch
+Name: FFXIVM En Patch
+Architecture: iphoneos-arm
+Description: A patch for Final Fantasy XIV: A Realm Reborn to change the language to English.
+Maintainer: und3fined <me@und3fined.com>
+Author: und3fined <me@und3fined.com>
+Section: Tweaks
