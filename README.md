@@ -20,7 +20,7 @@ Enable the English language for Final Fantasy XIV Mobile: Crystal World.
 
 ### Preparation
 
-1. Download patch from [Releases](/und3fined/FFXIVM-en-patch/releases)
+1. Download patch from [Releases](https://github.com/und3fined/FFXIVM-en-patch/releases)
 2. Download the decrypted IPA from [Decrypt.day](https://decrypt.day/app/id6447952559)
 
 ### Installation
