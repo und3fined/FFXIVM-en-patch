@@ -2,17 +2,6 @@ name: Build
 
 on:
   workflow_dispatch:
-    inputs:
-      create_release:
-        description: "Create a draft release"
-        default: true
-        required: false
-        type: boolean
-      upload_artifact:
-        description: "Upload Artifact"
-        default: false
-        required: false
-        type: boolean
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
