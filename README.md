@@ -15,10 +15,10 @@ Enable the English language for Final Fantasy XIV Mobile: Crystal World.
 - Free:
   - [Sideloadly](https://sideloadly.io/)
 
-- Paid certificate:
+- Tools is free but may require a paid Apple Developer account (can use free certificate if you have one):
   - [Feather](https://github.com/khcrysalis/Feather)
+  - KSign, ESign...
   - Or any other sideload tool that supports iOS 16.0 or later.
-
 
 ### Preparation
 
@@ -30,3 +30,7 @@ Enable the English language for Final Fantasy XIV Mobile: Crystal World.
 1. Select the decrypted IPA in your sideload tool.
 2. Inject to deb file download from releases page.
 3. Sideload the app to your device.
+
+### LICENSE
+
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/und3fined/FFXIVM-en-patch/blob/main/LICENSE) file for details.
