@@ -5,6 +5,8 @@ void writeGameUserSettingsToIni() {
   NSString *documentsDirectory = [paths firstObject];
   NSString *filePath = [documentsDirectory stringByAppendingPathComponent:@"FGame/Saved/Config/IOS/GameUserSettings.ini"];
 
+  NSLog(@"FFXIVM: Writing GameUserSettings.ini to %@", filePath);
+
   NSFileManager *fileManager = [NSFileManager defaultManager];
   if (![fileManager fileExistsAtPath:filePath]) {
     [fileManager createFileAtPath:filePath contents:nil attributes:nil];
