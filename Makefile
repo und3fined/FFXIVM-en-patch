@@ -5,7 +5,7 @@ export ARCHS = arm64
 
 ifneq ($(JAILBROKEN),1)
 export DEBUGFLAG = -ggdb -Wno-unused-command-line-argument -L$(THEOS_OBJ_DIR) -F$(_THEOS_LOCAL_DATA_DIR)/$(THEOS_OBJ_DIR_NAME)/install/Library/Frameworks
-MODULES = jailed
+# MODULES = jailed
 endif
 
 INSTALL_TARGET_PROCESSES = FGame
