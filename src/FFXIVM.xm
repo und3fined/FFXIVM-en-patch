@@ -5,7 +5,7 @@ void writeGameUserSettingsToIni() {
   NSString *documentsDirectory = [paths firstObject];
   NSString *filePath = [documentsDirectory stringByAppendingPathComponent:@"FGame/Saved/Config/IOS/GameUserSettings.ini"];
 
-  NSLog(@"FFXIVM: Writing GameUserSettings.ini to %@", filePath);
+  NSLog(@"[FFXIVM-en-patch] Writing GameUserSettings.ini to %@", filePath);
 
   NSFileManager *fileManager = [NSFileManager defaultManager];
   if (![fileManager fileExistsAtPath:filePath]) {
@@ -30,6 +30,7 @@ void writeGameUserSettingsToIni() {
 }
 
 %ctor {
+  NSLog(@"[FFXIVM-en-patch] Initializing...");
   writeGameUserSettingsToIni();
-  NSLog(@"FFXIVM: GameUserSettings.ini written to Documents directory.");
+  NSLog(@"[FFXIVM-en-patch] GameUserSettings.ini written to Documents directory.");
 }
