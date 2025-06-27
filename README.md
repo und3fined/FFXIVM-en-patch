@@ -1,6 +1,6 @@
 # FFXIVM ENG patch
 
-Enable the English patch for Final Fantasy XIV Mobile: Crystal World.
+Enable the English language for Final Fantasy XIV Mobile: Crystal World.
 
 ### Requirements
 
@@ -28,5 +28,3 @@ Enable the English patch for Final Fantasy XIV Mobile: Crystal World.
 1. Select the decrypted IPA in your sideload tool.
 2. Inject to deb file download from releases page.
 3. Sideload the app to your device.
-
-
