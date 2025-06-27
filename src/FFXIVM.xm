@@ -1,8 +1,12 @@
 #import "FFXIVM.h"
 
+- (NSURL *)applicationDocumentsDirectory {
+  return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+}
+
 void writeGameUserSettingsToIni() {
-  NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-  NSString *documentsDirectory = [paths firstObject];
+  NSURL *documentsURL = [[FFXIVM new] applicationDocumentsDirectory];
+  NSString *documentsDirectory = [documentsURL path];
   NSString *filePath = [documentsDirectory stringByAppendingPathComponent:@"FGame/Saved/Config/IOS/GameUserSettings.ini"];
 
   NSLog(@"[FFXIVM-en-patch] Writing GameUserSettings.ini to %@", filePath);
