@@ -40,7 +40,6 @@ void writeGameUserSettingsToIni() {
         [modifiedContent writeToFile:filePath atomically:YES encoding:NSUTF8StringEncoding error:nil];
       }
     } else {
-      NSString *content = @"[Internationalization]\nCulture=en";
       [defaultContent writeToFile:filePath atomically:YES encoding:NSUTF8StringEncoding error:&error];
       if (error) {
         NSLog(@"Error writing to file: %@", error.localizedDescription);
