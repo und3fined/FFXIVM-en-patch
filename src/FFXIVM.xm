@@ -13,7 +13,7 @@ void writeGameUserSettingsToIni() {
   BOOL isDirectory = NO;
   if (![fileManager fileExistsAtPath:configPath isDirectory:&isDirectory] || !isDirectory) {
     NSError *dirError = nil;
-    [fileManager createDirectoryAtPath:filePath withIntermediateDirectories:YES attributes:nil error:&dirError];
+    [fileManager createDirectoryAtPath:configPath withIntermediateDirectories:YES attributes:nil error:&dirError];
     if (dirError) {
       NSLog(@"FFXIVM Error creating directory: %@", dirError.localizedDescription);
     }
