@@ -77,3 +77,9 @@ playground.xcworkspace
 
 # Other
 *.orig
+
+# Theos
+.theos/
+.theos-cache/
+.theos-cache-*/
+.theos-cache-*/
