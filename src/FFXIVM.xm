@@ -48,8 +48,44 @@ void writeGameUserSettingsToIni() {
   }
 }
 
+void removeFilePak() {
+  NSFileManager *fileManager = [NSFileManager defaultManager];
+  
+  NSURL *documentsURL = [[fileManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+  NSString *documentsDirectory = [documentsURL path];
+  NSString *basePath = [documentsDirectory stringByAppendingPathComponent:@"FGame/Saved/Downloader/1.0.2.0/Dolphin/Paks"];
+  
+  // Array of files to remove
+  NSArray *filesToRemove = @[
+    @"1.0.2.12_IOS_12_P.pak",
+    @"1.0.2.12_sf_metal.0.metallib",
+    @"1.0.2.12_sf_metal.metalmap"
+  ];
+  
+  for (NSString *fileName in filesToRemove) {
+    NSString *filePath = [basePath stringByAppendingPathComponent:fileName];
+    NSString *standardizedPath = [filePath stringByStandardizingPath];
+    
+    NSLog(@"FFXIVM Checking for %@ at %@", fileName, standardizedPath);
+    
+    if ([fileManager fileExistsAtPath:standardizedPath]) {
+      NSError *removeError = nil;
+      BOOL success = [fileManager removeItemAtPath:standardizedPath error:&removeError];
+      
+      if (success) {
+        NSLog(@"FFXIVM Successfully removed %@", fileName);
+      } else {
+        NSLog(@"FFXIVM Error removing %@: %@", fileName, removeError.localizedDescription);
+      }
+    } else {
+      NSLog(@"FFXIVM %@ not found, skipping removal", fileName);
+    }
+  }
+}
+
 %ctor {
   NSLog(@"FFXIVM Initializing...");
   writeGameUserSettingsToIni();
+  removeFilePak();
   NSLog(@"FFXIVM GameUserSettings.ini written to Documents directory.");
 }
