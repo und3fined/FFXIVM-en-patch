@@ -1,4 +1,6 @@
 #import "FFXIVM.h"
+#import "DialogueFix.h"
+#import "FileMonitoring.h"
 
 void writeGameUserSettingsToIni() {
   NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -83,67 +85,21 @@ void removeFilePak() {
   }
 }
 
-// Dialogues were broken with 1.0.2.12
-void dialogueFix() {
-  NSFileManager *fileManager = [NSFileManager defaultManager];
-  
-  // Get the documents directory
-  NSURL *documentsURL = [[fileManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-  NSString *documentsDirectory = [documentsURL path];
-  
-  // Get the bundle path for the database file from Resources
-  NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"FDataBaseLoc" ofType:@"db"];
-  
-  if (!bundlePath) {
-    NSLog(@"FFXIVM Database file not found in bundle Resources");
-    return;
-  }
-  
-  // Destination path in documents
-  NSString *destPath = [documentsDirectory stringByAppendingPathComponent:@"FGame/PersistentDownloadDir/Database"];
-  
-  // Create destination directory if it doesn't exist
-  BOOL isDirectory = NO;
-  if (![fileManager fileExistsAtPath:destPath isDirectory:&isDirectory] || !isDirectory) {
-    NSError *dirError = nil;
-    [fileManager createDirectoryAtPath:destPath withIntermediateDirectories:YES attributes:nil error:&dirError];
-    if (dirError) {
-      NSLog(@"FFXIVM Error creating destination directory: %@", dirError.localizedDescription);
-      return;
-    }
-  }
-  
-  NSString *destFilePath = [destPath stringByAppendingPathComponent:@"FDataBaseLoc.db"];
-  
-  NSLog(@"FFXIVM Copying database from %@ to %@", bundlePath, destFilePath);
-  
-  // Always overwrite: remove the destination file if it exists
-  if ([fileManager fileExistsAtPath:destFilePath]) {
-    NSError *removeError = nil;
-    BOOL removed = [fileManager removeItemAtPath:destFilePath error:&removeError];
-    if (!removed) {
-      NSLog(@"FFXIVM Error removing existing database: %@", removeError.localizedDescription);
-      // Optionally, return here if you don't want to proceed on failure
-    }
-  }
-  
-  // Copy the file
-  NSError *copyError = nil;
-  BOOL success = [fileManager copyItemAtPath:bundlePath toPath:destFilePath error:&copyError];
-  
-  if (success) {
-    NSLog(@"FFXIVM Successfully copied database to documents");
-  } else {
-    NSLog(@"FFXIVM Error copying database: %@", copyError.localizedDescription);
-  }
-}
-
 %ctor {
   NSLog(@"FFXIVM Initializing...");
+  
+  // Initialize core functionality
   writeGameUserSettingsToIni();
   NSLog(@"FFXIVM GameUserSettings.ini written to Documents directory.");
+  
   removeFilePak();
   NSLog(@"FFXIVM Language blocking Pak files removed.");
+  
+  // Initialize dialogue fix and file monitoring
   dialogueFix();
   NSLog(@"FFXIVM Dialogue fix implemented.");
+  
+  // Setup app lifecycle monitoring
+  setupAppLifecycleMonitoring();
+  NSLog(@"FFXIVM App lifecycle monitoring setup complete.");
 }

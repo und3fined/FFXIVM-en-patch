@@ -11,8 +11,23 @@ endif
 INSTALL_TARGET_PROCESSES = FGame
 TWEAK_NAME = FFXIVM-en-patch
 
+# 🔽 Define the bundle details
+BUNDLE_NAME = FFXIVMBundle
+$(TWEAK_NAME)_BUNDLE = $(BUNDLE_NAME)
+
+# For jailbroken devices, install to system path
+ifeq ($(JAILBROKEN),1)
+$(BUNDLE_NAME)_INSTALL_PATH = /Library/Application Support/FFXIVM-en-patch
+else
+# For sideloaded apps, include bundle in the main app bundle
+$(TWEAK_NAME)_BUNDLES = $(BUNDLE_NAME)
+endif
+
+$(BUNDLE_NAME)_RESOURCE_FILES = Resources/*
+
 $(TWEAK_NAME)_FILES := $(wildcard src/*.xm)
 $(TWEAK_NAME)_CFLAGS = -fobjc-arc -Wno-module-import-in-extern-c
+$(TWEAK_NAME)_FRAMEWORKS = UIKit
 
 include $(THEOS)/makefiles/common.mk
 
