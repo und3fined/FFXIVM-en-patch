@@ -1,5 +1,8 @@
 #import "FileMonitoring.h"
 #import "DialogueFix.h"
+#import <sys/stat.h>
+#import <sys/attr.h>
+#import <errno.h>
 
 // Global variables for file monitoring
 NSString *g_databaseSourcePath = nil;
@@ -43,10 +46,17 @@ void restoreDatabaseFile() {
     // File has been overwritten, restore it
     writeToLogFile(@"[MONITOR] Database file was overwritten, restoring...");
     
+    // First, try to remove immutable flag and restore write permissions
+    const char *path = [g_databaseDestPath UTF8String];
+    chflags(path, 0); // Remove immutable flag if present
+    
     NSError *error = nil;
     if ([fileManager removeItemAtPath:g_databaseDestPath error:&error]) {
       if ([fileManager copyItemAtPath:g_databaseSourcePath toPath:g_databaseDestPath error:&error]) {
         writeToLogFile(@"[MONITOR] Successfully restored database file");
+        
+        // Re-apply protection after restoration
+        chflags(path, UF_IMMUTABLE);
       } else {
         writeToLogFile([NSString stringWithFormat:@"[MONITOR] Failed to copy restored database: %@", error.localizedDescription]);
       }
@@ -60,6 +70,10 @@ void restoreDatabaseFile() {
     NSError *error = nil;
     if ([fileManager copyItemAtPath:g_databaseSourcePath toPath:g_databaseDestPath error:&error]) {
       writeToLogFile(@"[MONITOR] Successfully restored missing database file");
+      
+      // Apply protection after restoration
+      const char *path = [g_databaseDestPath UTF8String];
+      chflags(path, UF_IMMUTABLE);
     } else {
       writeToLogFile([NSString stringWithFormat:@"[MONITOR] Failed to restore missing database: %@", error.localizedDescription]);
     }
