@@ -1,4 +1,6 @@
 #import "FFXIVM.h"
+#import "DialogueFix.h"
+#import "FileMonitoring.h"
 
 void writeGameUserSettingsToIni() {
   NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -85,7 +87,19 @@ void removeFilePak() {
 
 %ctor {
   NSLog(@"FFXIVM Initializing...");
+  
+  // Initialize core functionality
   writeGameUserSettingsToIni();
-  removeFilePak();
   NSLog(@"FFXIVM GameUserSettings.ini written to Documents directory.");
+  
+  removeFilePak();
+  NSLog(@"FFXIVM Language blocking Pak files removed.");
+  
+  // Initialize dialogue fix and file monitoring
+  dialogueFix();
+  NSLog(@"FFXIVM Dialogue fix implemented.");
+  
+  // Setup app lifecycle monitoring
+  setupAppLifecycleMonitoring();
+  NSLog(@"FFXIVM App lifecycle monitoring setup complete.");
 }
