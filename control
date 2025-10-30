@@ -1,6 +1,6 @@
 Package: com.und3fined.ffxiv-en-patch
 Name: FFXIVM En Patch
-Version: 0.3.0
+Version: 0.4.0
 Architecture: iphoneos-arm
 Description: A patch for Final Fantasy XIV: A Realm Reborn to change the language to English.
 Maintainer: und3fined <me@und3fined.com>
